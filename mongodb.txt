@@ -1,0 +1,114 @@
+mongosh "mongodb+srv://cluster0.ee5nc.mongodb.net/myFirstDatabase" --apiVersion 1 --username lasya
+show collections
+db.movie.insertOne({'title': 'Fight club', 'writer': 'chuck palahniko', 'year': 1999, 'actors': 'brad pitt', 'actors': 'edward noton' })
+db.movie.find()
+db.movie.insertOne({'title': 'Pulp Fiction', 'writer': 'Pulp Fiction', 'year': 1994, 'actors': 'John Travolta', 'actors': 'Uma Thurman' })
+db.movie.insertOne({'title': 'Pulp Fiction', 'writer': 'Pulp Fiction', 'year': 1994, 'actors': 'John Travolta', 'actors': 'Uma Thurman' })
+db.movie.insertOne({'title':'The Hobbit:An Unexpected Journey','writer':'J.R.R. Tolkein','year': 2012,'franchise':'The Hobbit'})
+db.movie.insertOne({'title':'The Hobbit:The Desolation of Smaug','writer':'J.R.R. Tolkein','year': 2013,'franchise':'The Hobbit'})
+db.movie.insertOne({'title':'The Hobbit: The Battle of the Five Armies','writer':'J.R.R. Tolkein','year':2012,'franchise':'The Hobbit','synopsis':'Bilbo and Company are forced to engage in a war against an array of combatants and keep the Lonely Mountain from falling into the hands of a rising darkness'})
+db.movie.insertOne({'title':'Pee Wee Hermans Big Adventure'})
+db.movie.insertOne({'title':'avatar'})
+1. db.movie.find()
+2. db.movie.find({'writer':'J.R.R. Tolkein'})
+3. db.movie.find({'actors': 'brad pitt'})
+4. db.movie.find({'franchise':'The Hobbit'})
+5. db.movie.find({'year':1990})
+6. db.movie.find({'year':{$gt:2000}}) db.movies.find([{{year:{$lt:2000}},{year:{$gt: 2010}}]})
+
+update
+1.db.movie.update({'title':'The Hobbit:An Unexpected Journey'},{$set:{'synopsis':'A reluctant hobbit, Bilbo Baggins, sets out to the Lonely Mountain with a spirited group of dwarves to reclaim their mountain home - and the gold within it - from the dragon Smaug.'}})
+2.db.movie.update({'title':'The Hobbit:An Unexpected Journey'},{$set:{'synopsis':'The dwarves, along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a mysterious and magical ring.'}})
+3. db.movie.update({'title': 'Pulp Fiction'},{$set:{'actors':'Samuel L. Jackson'}})
+
+text search
+1. db.movie.find({{{'synopsis'},{$set:{'synopsis':'Bilbo'}})
+
+
+users
+1. db.users.insertOne({'username':'GoodGuyGreg','first_name':'Good Guy','last_name':'Greg','username':'ScumbagSteve','first':'Scumbag','last':'Steve'})
+2. db.posts.insertOne({'username':'GoodGuyGreg','title':'Passes out at party','body':'Wakes up early and cleans house'})
+3. db.posts.insertOne({'username':'GoodGuyGreg','title':'Steals your identity','body':'Raises your credit score'})
+4. db.posts.insertOne({'username':'GoodGuyGreg','title':'Reports a bug in your code','body':'Sends you a Pull Request'})
+5. db.posts.insertOne({'username':'ScumbagSteve','title':'Borrows something','body':'Sells it'})
+6. db.posts.insertOne({'username':'ScumbagSteve','title':'Borrows something','body':'The end'})
+7. db.posts.insertOne({'username':'ScumbagSteve','title':'Forks your repo on github','body':'Sets to private'})
+8. db.comments.insertOne({'username':'GoodGuyGreg','comment':'Hope you got a good deal!','post':'[post_obj_id]','where [post_obj_id] is the ObjectId of the posts document':'"Borrows something"'})
+9. db.comments.insertOne({'username':'GoodGuyGreg','comment':'Whats mine is yours!','post':'[post_obj_id]','where [post_obj_id] is the ObjectId of the posts document':'"Borrows something"'})
+10. db.comments.insertOne({'username':'GoodGuyGreg','comment':'Dont violate the licensing agreement!','post':'[post_obj_id]','where [post_obj_id] is the ObjectId of the posts document':'"Forks your repo on github"'})
+11. db.comments.insertOne({'username':'ScumbagSteve','comment':'It still isnt clean','post':'[post_obj_id]','where [post_obj_id] is the ObjectId of the posts document':'"Passes out at party"'})
+12.  db.comments.insertOne({'username':'ScumbagSteve','comment':'Denied your PR cause I found a hack','post':'[post_obj_id]','where [post_obj_id] is the ObjectId of the posts document':'"Reports a bug in your code"'})
+13. db.users.find()
+14. db.posts.find()
+15. db.comments.find()
+16. db.posts.find({'username':'GoodGuyGreg'})
+17. db.posts.find({'username':'ScumbagSteve'})
+18. db.comments.find()
+19. db.comments.find({'username':'GoodGuyGreg'})
+20. db.comments.find({'username':'ScumbagSteve'})
+21. db.comments.find({'where [post_obj_id] is the ObjectId of the posts document':'"Reports a bug in your code"'})
+
+22. db.movie.find({"title":"The Hobbit:An Unexpected Journey"},{"synopsis":"Bilbo"})
+
+
+
+mongoimport --db myFirstDatabase --collection movie --file restaurants.json
+mongodb+srv://lasya:lasya@cluster0.ee5nc.mongodb.net/las --collection ya --type JSON --file restaurants.json
+
+mongoimport
+dir
+mongoimport --uri mongodb+srv://lasya:lasya@cluster0.ee5nc.mongodb.net/las --collection ya --type JSON --file restaurants.json
+C:\Users\LCHIDURA\Downloads\restaurants.zip\
+C:\Users\LCHIDURA\Downloads
+C:\Users\LCHIDURA\Downloads\mongodb-database-tools-windows-x86_64-100.5.2.zip\
+C:\Users\LCHIDURA\Downloads\Mongo DB Assignments (1).zip\
+mongoimport --uri mongodb+srv://lasya:lasya@cluster0.ee5nc.mongodb.net/assignment --collection assign --type JSON --file zip.json
+
+
+ASSIGNMENT2
+
+1.  db.assign.find({city:"ATLANTA"}) and db.assign.aggregate({})
+2.  db.assign.aggregate([{$match: {city:"ATLANTA"}}])
+3.  db.assign.aggregate([{$group:{_id:"city"}},{$count:"ATLANTA"}]) /////////db.assign.aggregate([{$count:"ATLANTA"}])
+4.  db.assign.aggregate([{$group: {POP:"$ATLANTA"}}])
+8. db.assign.aggregate( [ { $group: { _id: { state: "$state", city: "$city", zipcode: "_id"}, zip: { $sum: 1 } } }])
+6. db.assign.aggregate([{ $group: { _id:{ state: "$state", city: "$city", zipcode: "_id"}, count: { $sum: 1 } } },{ $sort: { count: -1 } }]})
+
+
+
+ASSIGNMENT 3
+1. Write a MongoDB query to display all the documents in the collection restaurants.
+1.  db.ya.find({})
+2. Write a MongoDB query to display the fields restaurant_id, name, borough and cuisine for all the documents in the collection restaurant.
+2.  db.ya.find({},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1,"_id":0});
+3.  db.ya.find({},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1});
+4.  db.ya.find({},{"restaurant_id" : 1,"name":1,"borough":1,"address.zipcodes" :1});
+5.  db.ya.find({"borough": "Bronx"}).limit(5);
+6.  db.ya.find({"borough": "Bronx"})
+7.  db.ya.find({"borough": "Bronx"}).skip(5).limit(5);
+8.  db.ya.find({grades : { $elemMatch:{"score":{$gt : 90}}}});
+9.  db.ya.find({grades : { $elemMatch:{"score":{$gt : 80,$lt:100}}}});
+10. db.ya.find({grades : { $elemMatch:{"latitide":{$lt : -95.754168}}}});
+11. db.ya.find({"cuisine" : {$ne : "American "},"grades.score" :{$gt: 70},"address.coord" : {$lt : -65.754168}})
+12. db.ya.find({"cuisine" : {$ne : "American "},"grades.score" :{$gt: 70},"address.coord" : {$lt : -65.754168}})
+13. db.ya.find( {"cuisine" : {$ne : "American "},"grades.grade" :"A","borough": {$ne : "Brooklyn"}}).sort({"cuisine":-1});
+14. db.ya.find({"name":"$Wil"},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1})
+15. db.ya.find({cuisine:"$ces"},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :-1});
+16. db.ya.find({"name":"Reg"},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1})
+17. db.ya.find({ "borough": "Bronx" , $or : [{ "cuisine" : "American " },{ "cuisine" : "Chinese" }]});
+18. db.ya.find({"borough" :{$in :["Staten Island","Queens","Bronx","Brooklyn"]}},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1});
+19. db.ya.find({"borough" :{$nin :["Staten Island","Queens","Bronx","Brooklyn"]}},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1});
+20. db.ya.find({"grades.score":{$not:{$gt:10}}},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1,"_id":0});
+21. 
+22. db.ya.find({"grades.date": ISODate("2014-08-11T00:00:00Z"), "grades.grade":"A" , "grades.score" : 11}, {"restaurant_id" : 1,"name":1,"grades":1});
+23. db.ya.find( { "grades.1.date": ISODate("2014-08-11T00:00:00Z"), "grades.1.grade":"A" , "grades.1.score" : 9},{"restaurant_id" : 1,"name":1,"grades":1})
+24. db.ya.find({"address.coord.1": {$gt : 42, $lte : 52}},{"restaurant_id" : 1,"name":1,"address":1,"coord":1})
+25. db.ya.find().sort({"name":1});      
+26. db.ya.find().sort({"name":-1}); 
+27. db.ya.find().sort({"cuisine":1,"borough" : -1,})
+28. db.ya.find({"address.street" : { $exists : true }}) 
+29. db.ya.find({"address.coord" : {$type : 1}})
+30. db.ya.find({"grades.score" :{$mod : [7,0]}}, {"restaurant_id" : 1,"name":1,"grades":1})
+31. db.ya.find({ name : { $regex : "mon.*", $options: "i" } },{ "name":1,"borough":1,"address.coord":1,"cuisine" :1})
+32. db.ya.find( { name : { $regex : /^Mad/i,}},{ "name":1,"borough":1, "address.coord":1, "cuisine" :1})
+                                                            
