@@ -1,0 +1,606 @@
+ 
+Application context injecting constructors
+
+package com.spring;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class DrawingApp {
+
+	public static void main(String[] args) 
+	{
+		//BeanFactory factory = new XmlBeanFactory(new FileSystemResourse("spring.xml"));
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+		Triangle triangle = (Triangle) context.getBean("triangle");
+		//Triangle triangle = new Triangle();
+		triangle.draw();
+
+	}
+
+}
+
+
+
+
+package com.spring;
+
+public class Triangle {
+	private String type;
+	private int height;
+	
+	public int getHeight() {
+		return height;
+	}
+	
+	
+	public Triangle(String type)
+	{
+		this.type = type;
+	}
+	public Triangle(int height)
+	{
+		this.height = height;
+	}
+	public Triangle(String type, int height) {
+		this.type = type;
+		this.height = height;
+	}
+public String getType() {
+		return type;
+		
+	}
+
+	//public void setType(String type) {
+	//	this.type = type;
+	//}
+public void draw() {
+	System.out.println(getType() + "Triangle drawn of height" + getHeight());
+}
+}
+
+-------------------------------------------------------------------
+
+injecting objects
+
+package com.spring;
+
+public class Triangle {
+	public Point pointA;
+	public Point pointB;
+	public Point pointC;
+
+public Point getPointA() {
+	return pointA;
+}
+public void setPointA(Point pointA) {
+	this.pointA = pointA;
+}
+public Point getPointB() {
+	return pointB;
+}
+public void setPointB(Point pointB) {
+	this.pointB = pointB;
+}
+public Point getPointC() {
+	return pointC;
+}
+public void setPointC(Point pointC) {
+	this.pointC = pointC;
+}
+public void draw() {
+	System.out.println("Point A =("+ getPointA().getX()+"," + getPointA().getY()+ ")");
+	System.out.println("Point B =("+ getPointB().getX()+"," + getPointB().getY()+ ")");
+	System.out.println("Point C =("+ getPointC().getX()+"," + getPointC().getY()+ ")");
+}
+}
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="triangle" class="com.spring.Triangle">
+<property name="pointA" ref="zeroPoint"></property>
+<property name="pointB" ref="point2"></property>
+<property name="pointC" ref="point3"></property>
+</bean>
+<bean id = "zeroPoint" class = "com.spring.Point">
+<property name = "x" value = "0"></property>
+<property name = "y" value = "0"></property>
+</bean>
+<bean id = "point2" class = "com.spring.Point">                             x y
+<property name = "x" value = "-20"></property>                      point A       [0,0
+                                                                    ponit B        -20,0
+                                                                    point c        20,0]
+<property name = "y" value = "0"></property>
+</bean>
+
+<bean id = "point3" class = "com.spring.Point">
+<property name = "x" value = "20"></property>
+<property name = "y" value = "0"></property>
+</bean>
+
+
+
+
+</beans>
+
+
+
+package com.spring;
+
+public class Point {
+private int x;
+private int y;
+public int getX() {
+	return x;
+}
+public void setX(int x) {
+	this.x = x;
+}
+public int getY() {
+	return y;
+}
+public void setY(int y) {
+	this.y = y;
+}
+}
+
+--------------------------------------------------------------------------------
+
+
+
+inner beans
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="triangle" class="com.spring.Triangle">
+<property name="pointA">
+<bean class = "com.spring.Point">
+<property name = "x" value = "0"></property>
+<property name = "y" value = "0"></property>
+</bean>
+
+
+</property>
+
+
+<property name="pointB">
+<bean class = "com.spring.Point">
+<property name = "x" value = "-20"></property>
+<property name = "y" value = "0"></property>
+</bean>
+
+</property>
+<property name="pointC">
+<bean id ="point3" class = "com.spring.Point">
+<property name = "x" value = "20"></property>
+<property name = "y" value = "0"></property>
+</bean>
+
+</property>
+</bean>
+</beans>
+
+--------
+alias
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="triangle" class="com.spring.Triangle">
+<property name="pointA">
+<bean class = "com.spring.Point">
+<property name = "x" value = "0"></property>
+<property name = "y" value = "0"></property>
+</bean>
+
+
+</property>
+
+
+<property name="pointB">
+<bean class = "com.spring.Point">
+<property name = "x" value = "-20"></property>
+<property name = "y" value = "0"></property>
+</bean>
+
+</property>
+<property name="pointC">
+<bean id ="point3" class = "com.spring.Point">
+<property name = "x" value = "20"></property>
+<property name = "y" value = "0"></property>
+</bean>
+
+</property>
+
+</bean>
+<alias name = "triangle" alias = "triangle-alias"></alias>
+</beans>
+
+--------------------------------------------------------------------------
+
+
+Collections List
+
+
+
+
+package com.spring;
+
+import java.util.List;
+
+public class Triangle {
+	private List<Point> points;
+	
+public List<Point> getPoints() {
+		return points;
+	}
+
+	public void setPoints(List<Point> points) {
+		this.points = points;
+	}
+
+public void draw() {
+	for (Point point : points) {
+		System.out.println("Point =("+ point.getX()+"," + point.getY()+ ")");
+	}
+	
+}
+}
+
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="triangle" class="com.spring.Triangle">
+<property name="points">
+<list>
+
+<ref bean="zeroPoint"/>
+<ref bean="point2"/>
+<ref bean="point3"/>
+
+
+
+</list>
+
+
+
+</property>
+<property name="pointB" ref="point2"></property>
+<property name="pointC" ref="point3"></property>
+</bean>
+<bean id = "zeroPoint" class = "com.spring.Point">
+<property name = "x" value = "0"></property>
+<property name = "y" value = "0"></property>
+</bean>
+<bean id = "point2" class = "com.spring.Point">
+<property name = "x" value = "-20"></property>
+<property name = "y" value = "0"></property>
+</bean>
+
+<bean id = "point3" class = "com.spring.Point">
+<property name = "x" value = "20"></property>
+<property name = "y" value = "0"></property>
+</bean>
+</beans>
+-----------------------------------------------------------------------------
+autowiring
+
+package com.spring;
+
+import java.util.List;
+
+public class Triangle {
+	public Point pointA;
+	public Point pointB;
+	public Point pointC;
+
+	public Point getPointA() {
+		return pointA;
+	}
+
+	public void setPointA(Point pointA) {
+		this.pointA = pointA;
+	}
+
+	public Point getPointB() {
+		return pointB;
+	}
+
+	public void setPointB(Point pointB) {
+		this.pointB = pointB;
+	}
+
+	public Point getPointC() {
+		return pointC;
+	}
+
+	public void setPointC(Point pointC) {
+		this.pointC = pointC;
+	}
+
+
+
+public void draw() {
+	System.out.println("Point A =("+ getPointA().getX()+"," + getPointA().getY()+ ")");
+	System.out.println("Point B =("+ getPointB().getX()+"," + getPointB().getY()+ ")");
+	System.out.println("Point C =("+ getPointC().getX()+"," + getPointC().getY()+ ")");
+	}
+	
+}
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+<bean id="triangle" class="com.spring.Triangle" autowire="byName/byType/constructor">
+<property name="pointA" ref="zeroPoint"></property>
+<property name="pointB" ref="point2"></property>
+<property name="pointC" ref="point3"></property>
+</bean>
+<bean id = "PointA" class = "com.spring.Point">
+<property name = "x" value = "0"></property>
+<property name = "y" value = "0"></property>
+</bean>
+<bean id = "PointB" class = "com.spring.Point">
+<property name = "x" value = "-20"></property>
+<property name = "y" value = "0"></property>
+</bean>
+
+<bean id = "PointC" class = "com.spring.Point">
+<property name = "x" value = "20"></property>
+<property name = "y" value = "0"></property>
+</bean>
+</beans>
+
+Point class
+package com.spring;
+
+public class Point {
+private int x;
+private int y;
+public int getX() {
+	return x;
+}
+public void setX(int x) {
+	this.x = x;
+}
+public int getY() {
+	return y;
+}
+public void setY(int y) {
+	this.y = y;
+}
+}
+
+-----------------------------------------------------------------------
+ApplicationContext Aware
+
+
+package com.spring;
+
+
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+public class Triangle implements ApplicationContextAware, BeanNameAware {
+	public Point pointA;
+	public Point pointB;
+	public Point pointC;
+	private ApplicationContext context = null;
+
+	public Point getPointA() {
+		return pointA;
+	}
+
+	public void setPointA(Point pointA) {
+		this.pointA = pointA;
+	}
+
+	public Point getPointB() {
+		return pointB;
+	}
+
+	public void setPointB(Point pointB) {
+		this.pointB = pointB;
+	}
+
+	public Point getPointC() {
+		return pointC;
+	}
+
+	public void setPointC(Point pointC) {
+		this.pointC = pointC;
+	}
+
+
+
+public void draw() {
+	System.out.println("Point A =("+ getPointA().getX()+"," + getPointA().getY()+ ")");
+	System.out.println("Point B =("+ getPointB().getX()+"," + getPointB().getY()+ ")");
+	System.out.println("Point C =("+ getPointC().getX()+"," + getPointC().getY()+ ")");
+	}
+
+@Override
+public void setApplicationContext(ApplicationContext Context) throws BeansException {
+	this.context = context;
+	
+}
+
+@Override
+public void setBeanName(String beanName) {
+	System.out.println("bean name is:" + beanName);
+	
+}
+	
+}
+
+-----------------------------------------------------------------------
+
+inheritance
+same as aboe but change in spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+<bean id="parenttriangle" class="com.spring.Triangle" autowire="byName">
+<property name="pointA" ref="zeroPoint"></property>
+</bean>
+
+<bean id="triangle1" class="com.spring.Triangle" autowire="byName" parent = "parenttriangle">
+<property name="pointB" ref="point2"></property>
+<property name="pointC" ref="point3"></property>
+</bean>
+
+<bean id="triangle2" class="com.spring.Triangle" autowire="byName" parent = "parenttriangle">
+<property name="pointB" ref="point2"></property>
+
+</bean>
+
+<bean id = "PointA" class = "com.spring.Point">
+<property name = "x" value = "0"></property>
+<property name = "y" value = "0"></property>
+</bean>
+<bean id = "PointB" class = "com.spring.Point">
+<property name = "x" value = "-20"></property>
+<property name = "y" value = "0"></property>
+</bean>
+
+<bean id = "PointC" class = "com.spring.Point">
+<property name = "x" value = "20"></property>
+<property name = "y" value = "0"></property>
+</bean>
+</beans>
+-------------------------------------------------------------------------------------
+
+Initializing and Desposable---life cycle callbacks
+
+package com.spring;
+
+
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+public class Triangle implements InitializingBean, DisposableBean{
+	public Point pointA;
+	public Point pointB;
+	public Point pointC;
+	private ApplicationContext context = null;
+
+	public Point getPointA() {
+		return pointA;
+	}
+
+	public void setPointA(Point pointA) {
+		this.pointA = pointA;
+	}
+
+	public Point getPointB() {
+		return pointB;
+	}
+
+	public void setPointB(Point pointB) {
+		this.pointB = pointB;
+	}
+
+	public Point getPointC() {
+		return pointC;
+	}
+
+	public void setPointC(Point pointC) {
+		this.pointC = pointC;
+	}
+
+
+
+public void draw() {
+	System.out.println("Point A =("+ getPointA().getX()+"," + getPointA().getY()+ ")");
+	System.out.println("Point B =("+ getPointB().getX()+"," + getPointB().getY()+ ")");
+	System.out.println("Point C =("+ getPointC().getX()+"," + getPointC().getY()+ ")");
+	}
+
+@Override
+//public void setApplicationContext(ApplicationContext Context) throws BeansException {
+	//this.context = context;
+	
+//}
+
+//@Override
+//public void setBeanName(String beanName) {
+	//System.out.println("bean name is:" + beanName);
+	
+//}
+
+//@Override
+public void afterPropertiesSet() throws Exception {
+	
+	System.out.println("InitializingBean init method for triangle");
+}
+
+@Override
+public void destroy() throws Exception {
+	System.out.println("DisposableBean  method to destroy");
+	
+}
+	
+}
+
+
+package com.spring;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class DrawingApp {
+
+	public static void main(String[] args) 
+	{
+		AbstractApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+		Context.registerShutdownHook();
+		Triangle triangle = (Triangle) context.getBean("triangle");
+		triangle.getPointA();
+
+	}
+
+}
+----------------------------------------------------------------------------
+Beanpose processor
+
+package com.spring;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+
+public class DisplayNameBeanPoseProcessor implements BeanFactoryPostProcessor{
+
+	@Override
+	public void postProcessAfterInialization(Object bean , String beanName) throws BeansException {
+		System.out.println("In after initilaztion method." + beanName);
+		return bean;
+	}
+		@Override
+		public void postProcessBeforeInialization(Object bean, String beanName) throws BeansException {
+			System.out.println("In before initilaztion method." + beanName);
+	return bean;
+		}
+		
+
+}
+
+Writing beanfactoryPose Processor
