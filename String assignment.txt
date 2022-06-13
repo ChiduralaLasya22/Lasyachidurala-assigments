@@ -1,0 +1,135 @@
+1.public class Strings{
+public static void main(String[] args){
+String str = "Hello World";
+int len = str.length();
+System.out.println("length of str is:"+str);
+}
+}
+
+2.String string = new String("Hello");
+string.concat("World");
+System.out.println("string is: "+string);
+
+3. 
+a. String str = "Java String refers to collection of Strings which are stored in heap memory";
+String s1 = str.toLowerCase();
+System.out.println("str after lower case is:"+str):
+System.out.println("s1 is:"+s1);
+ 
+b.String str = "Java String refers to collection of Strings which are stored in heap memory";
+String s1 = str.toUpperCase();
+System.out.println("str after upper case is:"+str):
+System.out.println("s1 is:"+s1);
+
+c.String str = "Java String refers to collection of Strings which are stored in heap memory";
+String str = str.replace('a', '$');
+System.out.println("str is:"+str);
+
+d. String str = "Java String refers to collection of Strings which are stored in heap memory";
+if(str.contains("collection")){
+System.out.println("Jim is in the string");
+}
+
+e. String str = "Java String refers to collection of Strings which are stored in heap memory";
+String str1 = "Java String refers to collection of Strings which are stored in heap memory";
+if(str.equals(str1)){
+System.out.println("str is equal to str1");
+}
+else{
+System.out.println("str is not equal to str1");
+}
+
+
+f. String str = "Java String refers to collection of Strings which are stored in heap memory";
+String str1 = "Java String refers to collection of Strings which are stored in heap memory";
+if(str==str1){
+System.out.println("str is equal to str1");
+}
+else{
+System.out.println("str is not equal to str1");
+}
+
+
+3. a. public class Stringbuffer{
+public static void main(String[] args)
+{
+StringBuffer sb = new StringBuffer("Welcome");
+sb.append("Home");
+System.out.println(sb);
+}
+}
+
+
+b. public class Stringbuffer{
+public static void main(String[] args)
+{
+StringBuffer sb = new StringBuffer("Welcome");
+sb.insert(offset:7, str:"to");
+System.out.println(sb);
+}
+}
+
+
+c. public class Stringbuffer{
+public static void main(String[] args)
+{
+StringBuffer sb = new StringBuffer("Welcome");
+sb.reverse("Home");
+System.out.println(sb);
+}
+}
+
+2. 
+a. public class Stringbuffer {
+public static void main(String[] args) {
+StringBuffer sb=new StringBuffer("StringBuffer ");
+sb.append("is a peer class of string ");
+sb.append("that provides much of ");
+sb.append("the functionality of strings.");
+System.out.println(sb);
+}
+}
+
+b. public class Stringbuffer {
+public static void main(String[] args) {
+StringBuffer sb=new StringBuffer("It is used to _ at the specified index position.");
+sb.replace(14,15,"insert text");
+System.out.println(sb);
+}
+}
+
+
+c. public class Stringbuffer {
+public static void main(String[] args) {
+StringBuffer sb=new StringBuffer("This method returns the reversed object on which it was called.");
+sb.reverse();
+System.out.println(sb);
+}
+}
+
+3.
+a. public class Stringbuild {
+public static void main(String[] args) {
+StringBuilder sb=new StringBuilder("StringBuild ");
+sb.append("is a peer class of string ");
+sb.append("that provides much of ");
+sb.append("the functionality of strings.");
+System.out.println(sb);
+}
+}
+
+b. public class Stringbuild {
+public static void main(String[] args) {
+StringBuilder sb=new StringBuilder("It is used to _ at the specified index position.");
+sb.replace(14,15,"insert text");
+System.out.println(sb);
+}
+}
+
+c. public class Stringbuild {
+public static void main(String[] args) {
+StringBuilder sb=new StringBuilder("This method returns the reversed object on which it was called.");
+sb.reverse();
+System.out.println(sb);
+}
+}
